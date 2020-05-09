@@ -6,7 +6,7 @@ chattr +i /usr/local/cwpsrv/htdocs/admin/admin
 if ! grep -q "\-- cwp_dnsreport --" /usr/local/cwpsrv/htdocs/resources/admin/include/3rdparty.php
 then
 cat <<'EOF' >> /usr/local/cwpsrv/htdocs/resources/admin/include/3rdparty.php
-<!-- cwp_icecast -->
+<!-- cwp_dnsreport -->
 <noscript>
 </ul>
 <li class="custom-menu"> <!-- this class "custom-menu" was added so you can remove the Developer Menu easily if you want -->
