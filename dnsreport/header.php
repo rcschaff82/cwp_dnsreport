@@ -13,6 +13,9 @@ try {
 <script type="text/javascript">
 $(document).ready(function() {
 $("#mn-12").addClass("highlight-menu");
+$("#mn-12cond").removeClass("notExpand").addClass("expand");
+$("#mn-12-sub").show();
+
 });
 </script>
 		<div class="navbar navbar-default" role="navigation">
