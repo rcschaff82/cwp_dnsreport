@@ -16,12 +16,12 @@ class accountdnscheck {
 	}
 
 	public function getVersion() {
-		if(is_file('version') === false) {
+		if(is_file('/usr/local/cwpsrv/htdocs/resources/admin/modules/dnsreport/version') === false) {
 			$this->error = 'version is missing, please reinstall plugin';
 			return false;
 		}
 		
-		$result = @file_get_contents('version');
+		$result = @file_get_contents('/usr/local/cwpsrv/htdocs/resources/admin/modules/dnsreport/version');
 		if($result === false) {
 			$this->error = 'version';
 			return false;
@@ -31,7 +31,7 @@ class accountdnscheck {
 	}
 ///  Use Github url to check version, or forget this horsecrap
 public function updateAvailable() {
-		$latestVersion = @file_get_contents('http://download.ndchost.com/accountdnscheck/version.php');
+		$latestVersion = @file_get_contents('https://raw.githubusercontent.com/rcschaff82/cwp_dnsreport/master/dnsreport/version');
 		if($latestVersion === false) {
 			$this->error = 'Failed to get latest version information from server';
 			return false;
