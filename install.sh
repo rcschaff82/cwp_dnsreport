@@ -25,3 +25,7 @@ cat <<'EOF' >> /usr/local/cwpsrv/htdocs/resources/admin/include/3rdparty.php
 <!-- end cwp_dnsreport -->
 EOF
 fi
+echo "cwp_dnsreport Successfully Installed"
+echo "To update:"
+echo "git pull"
+echo "./install.sh"
