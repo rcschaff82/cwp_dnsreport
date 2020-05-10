@@ -9,7 +9,7 @@ Installation Instructions
 
 wget -O - https://raw.githubusercontent.com/rcschaff82/cwp_installers/master/cwp_dnsreport.install | bash
 
-You should now have a new submenu under "Plugins" on the right side of the CWP Admin area called DNS Report
+You should now have a new submenu under "Plugins" on the left side of the CWP Admin area called DNS Report
 
 Change Log
 
