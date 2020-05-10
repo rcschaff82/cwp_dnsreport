@@ -72,7 +72,8 @@ try {
 $output = "Username,Reseller,Domain,Type,Account IP,Resolved To,Status";
                 foreach($accounts as $k => $v) {
                         foreach($v['domains'] as $kk => $vv) {
-                                $output .= "\n" . $k . "," . $v['reseller'] . "," . $kk . "," . $vv['type'] . "," . $v['ip'] . "," . $vv['resolvedto'] . "," . $vv['status'];
+				$resller = ($v['reseller'] == "1")?"":$v['reseller'];
+                                $output .= "\n" . $k . "," . $reseller . "," . $kk . "," . $vv['type'] . "," . $v['ip'] . "," . $vv['resolvedto'] . "," . $vv['status'];
                         }
                 }
         } else {
