@@ -21,8 +21,8 @@
 							<td><a href="http://{$v.ip}/~{$k}/" title="view using mod_userdir" target="_blank">{$k}</td>
 							<td><a href="http://{$kk}/" title="View {$kk}" target="_blank">{$kk}</a></td>
 							<td>{if $vv.type eq "account"}Primary Domain{elseif $vv.type eq "parked"}Parked Domain{elseif $vv.type eq "addon"}Addon Domain{elseif $vv.type eq "sub"}Sub Domain{else}{$vv.type}{/if}</td>
-							<td><a href="http://{$v.ip}/" title="View {$v.ip}" target="_blank">{$v.ip}</td>
-							<td>{if $vv.resolvedto ne "Failed to Resolve"}<a href="http://{$vv.resolvedto}/" title="View {$vv.resolvedto}" target="_blank">{$vv.resolvedto}</a>{else}{$vv.resolvedto}{/if}</td>
+							<td>{$v.ip}</td>
+							<td>{$vv.resolvedto}</td>
 							<td class="text-center {if $vv.status eq "ok"}success{else}danger{/if}">{$vv.status}</td>
 						</tr>
 						{/foreach}
