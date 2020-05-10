@@ -46,9 +46,9 @@ try {
         if($verbose) print "Checking to see if domains resolve to correct IP...";
         foreach($accounts as $k => $v) {
                 foreach($v['domains'] as $kk => $vv) {
-                        $result = gethostbyname($kk);
+                        $result = gethostbyname($kk.'.');
                         if($verbose) print ".";
-                        if($result == $kk) {
+                        if($result == $kk.'.') {
                                 $accounts[$k]['domains'][$kk]['status'] = 'error';
                                 $accounts[$k]['domains'][$kk]['resolvedto'] = 'Failed to Resolve';
                         } elseif($result == $v['ip']) {
