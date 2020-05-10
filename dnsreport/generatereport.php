@@ -69,10 +69,10 @@ try {
         // Create Report
         if($verbose) print "Writing report...";
         if($getopts['format'] == 'csv') {
-$output = "Username,Domain,Type,Account IP,Resolved To,Status";
+$output = "Username,Reseller,Domain,Type,Account IP,Resolved To,Status";
                 foreach($accounts as $k => $v) {
                         foreach($v['domains'] as $kk => $vv) {
-                                $output .= "\n" . $k . "," . $kk . "," . $vv['type'] . "," . $v['ip'] . "," . $vv['resolvedto'] . "," . $vv['status'];
+                                $output .= "\n" . $k . "," . $v['reseller'] . "," . $kk . "," . $vv['type'] . "," . $v['ip'] . "," . $vv['resolvedto'] . "," . $vv['status'];
                         }
                 }
         } else {
