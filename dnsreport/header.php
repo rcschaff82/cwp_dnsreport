@@ -10,6 +10,11 @@ try {
 }
 
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+$("#mn-12").addClass("highlight-menu");
+});
+</script>
 		<div class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
