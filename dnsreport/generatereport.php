@@ -24,9 +24,9 @@ document.getElementById("content").classList.add("sidebar-page");
 
 			<pre><?php
 try {
-			$res = mysqli_query($mysql_conn,"SELECT username,ip_address FROM user");
+			$res = mysqli_query($mysql_conn,"SELECT username,ip_address,reseller FROM user");
 			while ($row = mysqli_fetch_assoc($res)) {
-				$accounts[$row['username']] = [ 'domains' => [], 'ip' => $row['ip_address'] ];
+				$accounts[$row['username']] = [ 'domains' => [], 'ip' => $row['ip_address'], 'reseller' => $row['reseller'] ];
 				// Check Account Domains
 				ksort( $accounts );
 			}
@@ -105,3 +105,4 @@ $output = "Username,Domain,Type,Account IP,Resolved To,Status";
 ?>
 </pre>
 <?php include_once('footer.php'); ?>
+

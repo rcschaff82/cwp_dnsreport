@@ -7,6 +7,7 @@
 					<thead>
 						<tr>
 							<th>Username</th>
+							<th>Reseller</th>
 							<th>Domain</th>
 							<th>Type</th>
 							<th>Account IP</th>
@@ -19,6 +20,7 @@
 						{foreach $v.domains as $kk => $vv}
 						<tr>
 							<td><a href="http://{$v.ip}/~{$k}/" title="view using mod_userdir" target="_blank">{$k}</td>
+							<td>{$v.reseller}</td>
 							<td><a href="http://{$kk}/" title="View {$kk}" target="_blank">{$kk}</a></td>
 							<td>{if $vv.type eq "account"}Primary Domain{elseif $vv.type eq "parked"}Parked Domain{elseif $vv.type eq "addon"}Addon Domain{elseif $vv.type eq "sub"}Sub Domain{else}{$vv.type}{/if}</td>
 							<td>{$v.ip}</td>
