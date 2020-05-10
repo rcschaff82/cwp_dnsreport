@@ -288,7 +288,7 @@ class Smarty_Internal_Templatelexer
     function yy_r1_13($yy_subpatterns)
     {
 
-  if ($this->smarty->auto_literal && (strpos(" \n\t\r",substr($this->value,$this->ldel_length,1)) !== false)) {
+  if ($this->smarty->auto_literal && (@strpos(" \n\t\r",substr($this->value,$this->ldel_length,1)) !== false)) {
     $this->token = Smarty_Internal_Templateparser::TP_TEXT;
   } else {
      $this->token = Smarty_Internal_Templateparser::TP_LDEL;
