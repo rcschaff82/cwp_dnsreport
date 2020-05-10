@@ -12,9 +12,9 @@ try {
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
-$("#mn-12").addClass("highlight-menu");
-$("#mn-12cond").removeClass("notExpand").addClass("expand");
-$("#mn-12-sub").show();
+$("#mn-15").addClass("highlight-menu");
+$("#mn-15cond").removeClass("notExpand").addClass("expand");
+$("#mn-15-sub").show();
 
 });
 </script>

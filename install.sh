@@ -19,7 +19,7 @@ cat <<'EOF' >> /usr/local/cwpsrv/htdocs/resources/admin/include/3rdparty.php
                 +' <li>'
                 +' <a href="?module=dnsreport/index" class=""><span aria-hidden="true" class="icon16 icomoon-icon-arrow-right-3"></span>DNS Report</a>'
                 +'</li>';
-                $("ul#mn-12-sub").append(newButtons);
+                $("ul#mn-15-sub").append(newButtons);
         });
 </script>
 <!-- end cwp_dnsreport -->
