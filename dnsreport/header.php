@@ -8,7 +8,14 @@ try {
 } catch (exception $e) {
 	$exception = $e->getMessage();
 }
-
+try {
+	include_once('update_class.php');
+	$update = new gitupdate('rcschaff82','cwp_dnsreport');
+	$force = (isset($_GET['forceupdate']))?'Y':'N';
+	$update->checkupdate($force);
+} catch (exception $e) {
+	$exception = $e->getMessage();
+}
 ?>
 <script type="text/javascript">
 $(document).ready(function() {

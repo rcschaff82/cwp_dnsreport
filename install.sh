@@ -1,5 +1,6 @@
 #!/bin/bash
 \cp -Rf dnsreport /usr/local/cwpsrv/htdocs/resources/admin/modules/
+\cp -f update_class.php /usr/local/cwpsrv/htdocs/resources/admin/modules/
 mkdir /usr/local/cwpsrv/htdocs/resources/admin/modules/dnsreport/reports
 chattr -i /usr/local/cwpsrv/htdocs/admin/admin
 \cp -f downloadreport.php /usr/local/cwpsrv/htdocs/admin/admin
