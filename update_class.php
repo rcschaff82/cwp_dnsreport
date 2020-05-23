@@ -58,14 +58,13 @@ EOF;
     }
     private function setval($valname,$valval) {
 	global $mysql_conn;
-	if (mysqli_query($mysql_conn,"insert into {$this->script}_settings (varname, varval) values ('{$valname}','{$valval}') on duplicate key update varval='{$valval}'") or die(mysqli_error($mysql_conn))) return true;
+	if (mysqli_query($mysql_conn,"insert into {$this->script}_settings (varname, varval) values ('{$valname}','{$valval}') on duplicate key update {$valname}='{$valval}'") or die($mysqli_error($mysql_conn))) return true;
     }
     private function readval($valname) {
 	global $mysql_conn;
 	$resp = mysqli_query($mysql_conn,"select varval from {$this->script}_settings where varname='{$valname}'") or die(mysqli_error($mysql_conn));
 	if (mysqli_num_rows($resp) > 0) {
 		list($var) = mysqli_fetch_row($resp);
-		//echo "Variable $var<br>";
 		return $var;
 	} else {
 		return false;
@@ -73,8 +72,7 @@ EOF;
     }
     public function checkupdate($force = "N") {
 		// need to check date last checked (varname, varval) $this->script_settings
-		if ( ($lastcheck = $this->readval('lastcheck')) && ($sha = $this->readval('sha')) ) {
-			//echo "First: $lastcheck<br>";
+		if ($lastcheck = $this->readval('lastcheck') && $sha = $this->readval('sha')) {
 			if ($force != "N") {
 				$newsha = $this->checkgit();
 				if ($newsha === false) return false;
@@ -86,7 +84,6 @@ EOF;
 				}
 				return true;
 			}
-			//echo "Test: $lastcheck $sha";
 			$start_date = new DateTime($lastcheck);
 			$since_start = $start_date->diff(new DateTime(date("Y-m-d H:i:s")));
 			if ($since_start->d >= 1) {
@@ -114,16 +111,16 @@ EOF;
 		else {
 			// No Response or table not created.  We do the first check and create it.
 			$sha = $this->checkgit();
+			if ($sha === false) return false;
 			$date = date("Y-m-d H:i:s");
-			$this->setval('lastcheck',$date);
-			if ($sha === false) $sha="NA";
 			$this->setval('sha',$sha);
+			$this->setval('lastcheck',$date);
 		}
 		/**/
 	}
 }
 /*To Call
-include_once "update_class.php";
+include_once "gitupdate.php";
 $update = new gitupdate('rcschaff82','cwp_2fa');
 $force = (isset($_GET['forceupdate']))?'Y':'N';
 $update->checkupdate($force);
