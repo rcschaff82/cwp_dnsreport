@@ -7,6 +7,7 @@ class gitupdate {
 		global $mysql_conn, $_POST;
 		$this->url =  "https://api.github.com/repos/$user/$script/commits";
 		$this->script = $script;
+		$this->modname = $modname;
 		if( mysqli_num_rows(mysqli_query($mysql_conn,"SHOW TABLES LIKE '{$this->script}_settings' ")) == 0 ){		
 			$mi_table3= "CREATE TABLE {$this->script}_settings(
 			varname VARCHAR(65) NOT NULL UNIQUE,
