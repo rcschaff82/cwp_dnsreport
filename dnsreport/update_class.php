@@ -20,11 +20,19 @@ class gitupdate {
 				$this->doupdate();
 		}
 	}
+	private function is_process_running($pid)
+        {
+                exec("ps $PID", $ProcessState);
+                return(count($ProcessState) >= 2);
+        }
 	private function doupdate() {
 	global $_POST;
-	shell_exec("cd /usr/local/src/{$this->script} && git pull && ./install.sh");
+	$ps = shell_exec("(cd /usr/local/src/{$this->script} && git pull && ./install.sh) > /dev/null 2>&1 &");
+	
 	unset($_POST);
 	echo <<<EOF
+		Update running in the background.  Please wait about 2 minutes and refresh.
+
 		<script>
 		if ( window.history.replaceState ) {
 			window.history.replaceState( null, null, window.location.href );
@@ -50,7 +58,7 @@ EOF;
 		}
 	}
     private function updatemessage() {
-	$msg = "<div style='position:absolute; top:80px;' class='alert alert-info'><button type='button' class='close' data-dismiss='alert'>×</button>";
+	$msg = "<div style='position:absolute; top:80px; z-index:200;' class='alert alert-info'><button type='button' class='close' data-dismiss='alert'>×</button>";
 	$msg .= "<h3>A New Version is available</h3><p>Please follow the directions:<br><code>cd /usr/local/src/$this->script<br>git pull && ./install.sh</code>";
 	$msg .= '<h3>A New Version is available</h3><p><form method="post" action="index.php?module='.$this->modname.'" class="inline">
  		<button type="submit" name="update" value="update" class="link-button">Update Now!</button></form>';
@@ -81,11 +89,11 @@ EOF;
 				$newsha = $this->checkgit();
 				if ($newsha === false) return false;
 				$date = date("Y-m-d H:i:s");
-				$this->setval('sha',$newsha);
 				$this->setval('lastcheck',$date);
 				if ($sha != $newsha) {
 					echo $this->updatemessage();
 				}
+				$this->setval('sha',$newsha);
 				return true;
 			}
 			//echo "Test: $lastcheck $sha";
@@ -95,11 +103,12 @@ EOF;
 				$newsha = $this->checkgit();
 				if ($newsha === false) return false;
 				$date = date("Y-m-d H:i:s");
-				$this->setval('sha',$newsha);
                                 $this->setval('lastcheck',$date);
 				if ($sha != $newsha) {
 					echo $this->updatemessage();
 				}
+				$this->setval('sha',$newsha);
+
 			}
 			/*
 			 $since_start->days.' days total<br>';
