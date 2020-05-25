@@ -10,7 +10,7 @@ try {
 }
 try {
 	include_once('update_class.php');
-	$update = new gitupdate('rcschaff82','cwp_dnsreport');
+	$update = new gitupdate('rcschaff82','cwp_dnsreport','dnsreport/index');
 	$force = (isset($_GET['forceupdate']))?'Y':'N';
 	$update->checkupdate($force);
 } catch (exception $e) {
@@ -67,4 +67,5 @@ $("#mn-15-sub").show();
 				</div>
 			</div>
 			<?php } ?>
+
 
