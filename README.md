@@ -13,7 +13,10 @@ You should now have a new submenu under "Plugins" on the left side of the CWP Ad
 
 Change Log
 
--Initial Release
+1.0	- Initial Release
+1.1	- Added Update Script
+1.1.002	- Added AutoReload to Update Script when finished
 
 TODO List:
 
+To request a new feature, create an issue with the label Feature Request

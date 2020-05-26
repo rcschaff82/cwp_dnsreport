@@ -5,6 +5,7 @@ class gitupdate {
 	public $modname;
 	public function __construct($user,$script,$modname) {
 		global $mysql_conn, $_POST;
+		$this->check_include();
 		$this->url =  "https://api.github.com/repos/$user/$script/commits";
 		$this->script = $script;
 		$this->modname = $modname;
@@ -20,23 +21,45 @@ class gitupdate {
 				$this->doupdate();
 		}
 	}
-	private function is_process_running($pid)
-        {
-                exec("ps $PID", $ProcessState);
-                return(count($ProcessState) >= 2);
-        }
+	private function check_include() {
+		if(!file_exists("/usr/local/cwpsrv/htdocs/admin/admin/pscheck.php")) {
+		shell_exec('chattr -i /usr/local/cwpsrv/htdocs/admin/admin/');
+			$data = '<?php
+function is_process_running($pid)
+{
+        exec("ps $pid", $ProcessState);
+        return(count($ProcessState) >= 2);
+}
+if (!is_process_running($_GET["pid"])) {
+echo "done";
+}
+?>';
+		file_put_contents("/usr/local/cwpsrv/htdocs/admin/admin/pscheck.php",$data);
+		}
+	}
 	private function doupdate() {
 	global $_POST;
-	$ps = shell_exec("(cd /usr/local/src/{$this->script} && git pull && ./install.sh) > /dev/null 2>&1 &");
+	$ps = trim(shell_exec("(cd /usr/local/src/{$this->script} && git pull && ./install.sh) > /dev/null 2>&1 & echo $!"));
 	
 	unset($_POST);
 	echo <<<EOF
-		Update running in the background.  Please wait about 2 minutes and refresh.
-
+		<div id="updateprog">Update in progress. Please wait.</div>
 		<script>
-		if ( window.history.replaceState ) {
-			window.history.replaceState( null, null, window.location.href );
-		}
+		var intr = setInterval(function() {
+    $.get( "pscheck.php", { pid: {$ps} } )
+  .done(function( data ) {
+	  console.log(data);
+		if (data == 'done') {
+			clearInterval(intr);
+			$("#updateprog").html($("#updateprog").html() + "<br>Update Done!  Please Refresh.");
+			location.reload();
+			}
+			else {
+			$("#updateprog").html($("#updateprog").html() + '.'); 	
+			};
+  });
+  }, 5000); 
+
 		</script>
 EOF;
 	}
@@ -58,7 +81,7 @@ EOF;
 		}
 	}
     private function updatemessage() {
-	$msg = "<div style='position:absolute; top:80px; z-index:200;' class='alert alert-info'><button type='button' class='close' data-dismiss='alert'>×</button>";
+	$msg = "<div style='position:absolute; top:80px; z-index:200' class='alert alert-info'><button type='button' class='close' data-dismiss='alert'>×</button>";
 	$msg .= "<h3>A New Version is available</h3><p>Please follow the directions:<br><code>cd /usr/local/src/$this->script<br>git pull && ./install.sh</code>";
 	$msg .= '<h3>A New Version is available</h3><p><form method="post" action="index.php?module='.$this->modname.'" class="inline">
  		<button type="submit" name="update" value="update" class="link-button">Update Now!</button></form>';
@@ -103,12 +126,11 @@ EOF;
 				$newsha = $this->checkgit();
 				if ($newsha === false) return false;
 				$date = date("Y-m-d H:i:s");
+				$this->setval('sha',$newsha);
                                 $this->setval('lastcheck',$date);
 				if ($sha != $newsha) {
 					echo $this->updatemessage();
 				}
-				$this->setval('sha',$newsha);
-
 			}
 			/*
 			 $since_start->days.' days total<br>';
