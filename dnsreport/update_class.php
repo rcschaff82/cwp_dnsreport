@@ -40,7 +40,7 @@ echo "done";
 	private function doupdate() {
 	global $_POST;
 	$ps = trim(shell_exec("(cd /usr/local/src/{$this->script} && git pull && ./install.sh) > /dev/null 2>&1 & echo $!"));
-	
+	$this->setval('sha', $this->readval('newsha'));
 	unset($_POST);
 	echo <<<EOF
 		<div id="updateprog">Update in progress. Please wait.</div>
@@ -52,7 +52,7 @@ echo "done";
 		if (data == 'done') {
 			clearInterval(intr);
 			$("#updateprog").html($("#updateprog").html() + "<br>Update Done!  Please Refresh.");
-			location.reload();
+			document.location.href={$this->modname};
 			}
 			else {
 			$("#updateprog").html($("#updateprog").html() + '.'); 	
@@ -61,7 +61,15 @@ echo "done";
   }, 5000); 
 
 		</script>
+		<script>
+                if ( window.history.replaceState ) {
+                        window.history.replaceState( null, null, window.location.href );
+                }
+                </script>
+		
+
 EOF;
+		unset($_POST);
 	}
 	private function checkgit() {
 		$curl = curl_init();
@@ -116,21 +124,29 @@ EOF;
 				if ($sha != $newsha) {
 					echo $this->updatemessage();
 				}
-				$this->setval('sha',$newsha);
+				$this->setval('newsha',$newsha);
 				return true;
 			}
 			//echo "Test: $lastcheck $sha";
 			$start_date = new DateTime($lastcheck);
 			$since_start = $start_date->diff(new DateTime(date("Y-m-d H:i:s")));
+			//  Check if we already have an update. 
+			if ($this->readval('newsha') != $this->readval('sha')) {
+				// Make sure we are setting the latest update. ( Just in case there was more than 1)
+				$newsha = $this->checkgit();
+				$this->setval('newsha',$newsha);
+				echo $this->updatemessage();
+				return true;
+			}
 			if ($since_start->d >= 1) {
 				$newsha = $this->checkgit();
 				if ($newsha === false) return false;
 				$date = date("Y-m-d H:i:s");
-				$this->setval('sha',$newsha);
-                                $this->setval('lastcheck',$date);
+                $this->setval('lastcheck',$date);
 				if ($sha != $newsha) {
 					echo $this->updatemessage();
 				}
+				$this->setval('newsha',$newsha);
 			}
 			/*
 			 $since_start->days.' days total<br>';
