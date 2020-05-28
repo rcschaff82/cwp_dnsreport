@@ -19,7 +19,7 @@ Change Log
 1.1.003 - Just updated Version for debug
 1.1.004 - Removed Nag Update screen that confused people
 1.1.005 - Fixed issue crashing script from .004
-
+1.1.006 - Auto Refresh on update completion
 
 TODO List:
 
