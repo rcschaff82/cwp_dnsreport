@@ -52,7 +52,7 @@ echo "done";
 		if (data == 'done') {
 			clearInterval(intr);
 			$("#updateprog").html($("#updateprog").html() + "<br>Update Done!  Please Refresh.");
-			document.location.href=index.php?module={$this->modname};
+			document.location.href='index.php?module={$this->modname}';
 			}
 			else {
 			$("#updateprog").html($("#updateprog").html() + '.'); 	
