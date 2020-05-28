@@ -18,6 +18,9 @@ Change Log
 1.1.002	- Added AutoReload to Update Script when finished
 1.1.003 - Just updated Version for debug
 1.1.004 - Removed Nag Update screen that confused people
+1.1.005 - Fixed issue crashing script from .004
+
+
 TODO List:
 
 To request a new feature, create an issue with the label Feature Request

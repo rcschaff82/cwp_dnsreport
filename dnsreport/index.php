@@ -7,20 +7,6 @@ include_once('header.php');
 				<h1>Welcome to the Account DNS Check CWP Plugin!</h1>
 			</div>
 
-			<!--?php if($accountdnscheck->updateAvailable() === true) { ?>
-			<div class="alert alert-warning alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<div class="media">
-					<div class="pull-left" style="font-size:48px;padding:0px 15px;">
-						<span class="glyphicon glyphicon-refresh"></span>
-					</div>
-					<div class="media-body">
-						<h3 class="media-heading">New Version Available!</h3>
-						<p>A new version of this plugin is available! <a href="<?php echo $base;?>/upgrade" class="alert-link">Upgrade Now?</a></p>
-					</div>
-				</div>
-			</div>
-			<?php } ?-->
 
 			<?php if($accountdnscheck->resolverCheck() === false) { ?>
 			<div class="alert alert-danger alert-dismissable">
